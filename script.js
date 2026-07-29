@@ -45,7 +45,7 @@
   ).matches;
 
   var revealTargets = document.querySelectorAll(
-    ".service-item, .gallery-item, .location-copy, .location-map"
+    ".service-item, .gallery-item, .location-copy, .location-map, .faq-item"
   );
 
   revealTargets.forEach(function (el) {

@@ -101,6 +101,19 @@ h1, h2, h3 {
 }
 .eyebrow-light { color: var(--cyan); }
 
+/* Platzhalter-Kennzeichnung: markiert Stellen, die noch echte Angaben brauchen */
+.placeholder {
+  display: inline-block;
+  color: var(--red);
+  border-bottom: 1.5px dashed var(--red);
+  font-weight: 600;
+}
+.placeholder-inverse {
+  color: inherit;
+  border-bottom-color: currentColor;
+  opacity: 0.85;
+}
+
 /* ================= Buttons ================= */
 .btn {
   display: inline-flex;
@@ -138,6 +151,8 @@ h1, h2, h3 {
   color: var(--paper-on-navy);
 }
 .btn-outline:hover { background: rgba(255,255,255,0.08); border-color: var(--cyan); }
+
+.btn-whatsapp svg { flex: none; }
 
 /* ================= Header ================= */
 .site-header {
@@ -293,13 +308,18 @@ h1, h2, h3 {
 }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 0.9rem; }
 .hero-rating {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.55rem;
   margin-top: 1.75rem;
   font-size: 0.92rem;
   color: var(--navy-deep);
+  width: fit-content;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s ease;
 }
+.hero-rating:hover,
+.hero-rating:focus-visible { border-bottom-color: var(--navy-deep); }
 .stars { color: var(--brass); letter-spacing: 0.05em; }
 
 .hero-media {
@@ -390,6 +410,24 @@ h1, h2, h3 {
   max-width: 56ch;
 }
 
+.service-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.2rem;
+  margin-top: 0.7rem !important;
+  font-size: 0.85rem;
+}
+.service-price { color: var(--ink); }
+.service-duration { color: var(--ink-soft); }
+
+.section-note {
+  max-width: 640px;
+  margin: 2.5rem auto 0;
+  padding: 0 var(--gutter);
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
 /* ================= Standort (dunkel) ================= */
 .location {
   position: relative;
@@ -445,7 +483,22 @@ h1, h2, h3 {
 .location address {
   font-size: 1.05rem;
   line-height: 1.6;
-  margin-bottom: 1.6rem;
+  margin-bottom: 1rem;
+}
+
+.location-directions-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--paper-on-navy-dim);
+  margin: 0 0 0.35rem;
+}
+.location-directions {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  max-width: 42ch;
+  margin: 0 0 1.6rem;
 }
 
 .hours {
@@ -464,14 +517,22 @@ h1, h2, h3 {
 .hours dt { color: var(--paper-on-navy-dim); font-weight: 500; }
 .hours dd { margin: 0; font-weight: 700; }
 
+.location-notes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1.9rem;
+}
 .location-note {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   font-size: 0.88rem;
   color: var(--paper-on-navy-dim);
-  margin-bottom: 1.9rem;
 }
+.location-note svg { flex: none; }
+
+.location .placeholder { color: #F2C879; border-bottom-color: #F2C879; }
 
 .location-actions { display: flex; flex-wrap: wrap; gap: 0.9rem; }
 .location-actions .btn-primary { background: var(--cyan); color: var(--navy-deep); }
@@ -528,6 +589,51 @@ h1, h2, h3 {
   font-size: 0.92rem;
 }
 
+/* ================= FAQ ================= */
+.faq {
+  padding: var(--section-pad) 0;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.faq-list {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  border-top: 1px solid rgba(28, 27, 25, 0.12);
+}
+.faq-item {
+  border-bottom: 1px solid rgba(28, 27, 25, 0.12);
+  padding: 1.3rem 0;
+}
+.faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  list-style: none;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: "+";
+  flex: none;
+  font-family: var(--font-body);
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--cyan-deep);
+  transition: transform 0.2s ease;
+}
+.faq-item[open] summary::after { content: "+"; transform: rotate(45deg); }
+.faq-item p {
+  margin: 0.9rem 0 0;
+  color: var(--ink-soft);
+  max-width: 60ch;
+  line-height: 1.6;
+}
+
 /* ================= Footer ================= */
 .site-footer { background: var(--navy-deep); color: var(--paper-on-navy-dim); }
 .footer-inner {
@@ -541,7 +647,17 @@ h1, h2, h3 {
 .footer-brand { color: var(--paper-on-navy); }
 .footer-brand .logo-mark { color: var(--cyan); width: 30px; height: 30px; margin-bottom: 0.9rem; }
 .footer-brand p { margin: 0 0 0.5rem; line-height: 1.5; }
-.footer-rating { display: flex; align-items: center; gap: 0.4rem; font-size: 0.9rem; }
+.footer-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  width: fit-content;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.footer-rating:hover,
+.footer-rating:focus-visible { color: var(--cyan); border-bottom-color: var(--cyan); }
 
 .footer-col h3 {
   font-family: var(--font-body);
